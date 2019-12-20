@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <sys/xattr.h>
 #include "libacl.h"
+#include "libacl_nfs4.h"
 
 #include "__acl_extended_file.h"
 
