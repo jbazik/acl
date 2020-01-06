@@ -42,6 +42,19 @@ AS_IF([test "x$enable_debug" = "xyes"],
 	[CPPFLAGS="$CPPFLAGS -DDEBUG"],
 	[CPPFLAGS="$CPPFLAGS -DNDEBUG"])
 
+dnl NFSv4 ACL support disabled by default.
+AC_ARG_ENABLE([nfs4],
+	[AS_HELP_STRING([--enable-nfs4], [Enable NFSv4 ACL support])])
+AS_IF([test "x$enable_nfs4" = "xyes"], [
+	AC_CHECK_HEADERS([nfsidmap.h])
+	if test "x$ac_cv_header_nfsidmap_h" != xyes; then
+		echo
+		echo 'FATAL ERROR: header nfsidmap.h not found'
+		exit 1
+	fi
+])
+AM_CONDITIONAL([NFS4], test x$enable_nfs4 = xyes)
+
 dnl Automatically increment the revision for every release.
 LT_REVISION=$(echo "${PACKAGE_VERSION}" | tr -d .)
 AC_SUBST(LT_REVISION)

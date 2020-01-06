@@ -5,6 +5,12 @@ noinst_HEADERS += \
 	include/misc.h \
 	include/walk_tree.h
 
+if NFS4
+noinst_HEADERS += \
+	include/libacl_nfs4.h \
+	include/nfs4.h
+endif
+
 SUBST_INSTALL_HEADER = \
 	subst_install_header() { \
 	  file=`echo "$$1" | sed -e 's,^.*/,,'`; \
