@@ -85,7 +85,7 @@ extern int acl_ptn4_acl_trans(acl_t, struct nfs4_acl *, acl_type_t, u32, char*);
 
 
 /** Access Functions **/
-extern inline int	acl_nfs4_get_whotype(char*);
+extern int	acl_nfs4_get_whotype(char*);
 extern int			acl_nfs4_get_who(struct nfs4_ace*, int*, char**);
 
 /**** Private(?) functions ****/

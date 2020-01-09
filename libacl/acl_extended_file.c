@@ -23,7 +23,9 @@
 #include <unistd.h>
 #include <sys/xattr.h>
 #include "libacl.h"
+#ifdef USE_NFSV4_TRANS
 #include "libacl_nfs4.h"
+#endif
 
 #include "__acl_extended_file.h"
 
