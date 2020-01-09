@@ -112,6 +112,9 @@ if NFS4
 libacl_la_LIBADD += -lnfsidmap
 libacl_la_CFLAGS += -DUSE_NFSV4_TRANS
 endif
+if NFS4_NODENY
+libacl_la_CFLAGS += -DNFSV4_NODENY
+endif
 libacl_la_LDFLAGS = \
 	-Wl,--version-script,$(top_srcdir)/exports \
 	-version-info $(LTVERSION)

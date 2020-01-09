@@ -51,6 +51,11 @@ acl_nfs4_add_ace(struct nfs4_acl *acl, u32 type, u32 flag, u32 access_mask,
 		return -1;
 	}
 
+#ifdef NFSV4_NODENY
+	if( type == NFS4_ACE_ACCESS_DENIED_ACE_TYPE )
+		return 0;
+#endif
+
 	if ((ace = malloc(sizeof(*ace))) == NULL)
 	{
 		errno = ENOMEM;
@@ -60,8 +65,10 @@ acl_nfs4_add_ace(struct nfs4_acl *acl, u32 type, u32 flag, u32 access_mask,
 	ace->type = type;
 	ace->flag = flag;
 
+#ifndef NFSV4_NODENY
 	if( type == NFS4_ACE_ACCESS_DENIED_ACE_TYPE )
 		access_mask = access_mask & ~(NFS4_ACE_MASK_IGNORE);
+#endif
 
 
 	/* Castrate delete_child if we aren't a directory */

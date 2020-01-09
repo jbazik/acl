@@ -44,8 +44,11 @@ AS_IF([test "x$enable_debug" = "xyes"],
 
 dnl NFSv4 ACL support disabled by default.
 AC_ARG_ENABLE([nfs4],
-	[AS_HELP_STRING([--enable-nfs4], [Enable NFSv4 ACL support])])
-AS_IF([test "x$enable_nfs4" = "xyes"], [
+	[AS_HELP_STRING([--enable-nfs4@<:@=nodeny@:>@],
+			[Enable NFSv4 ACL support (optionally avoid deny acls)]
+	)]
+)
+AS_IF([test "x$enable_nfs4" = "xyes" || test "x$enable_nfs4" = "xnodeny"], [
 	AC_CHECK_HEADERS([nfsidmap.h])
 	if test "x$ac_cv_header_nfsidmap_h" != xyes; then
 		echo
@@ -53,7 +56,9 @@ AS_IF([test "x$enable_nfs4" = "xyes"], [
 		exit 1
 	fi
 ])
-AM_CONDITIONAL([NFS4], test x$enable_nfs4 = xyes)
+AM_CONDITIONAL([NFS4], test "x$enable_nfs4" = xyes)
+AM_CONDITIONAL([NFS4], test "x$enable_nfs4" = xnodeny)
+AM_CONDITIONAL([NFS4_NODENY], test "x$enable_nfs4" = xnodeny)
 
 dnl Automatically increment the revision for every release.
 LT_REVISION=$(echo "${PACKAGE_VERSION}" | tr -d .)
